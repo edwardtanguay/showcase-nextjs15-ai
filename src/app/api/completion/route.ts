@@ -1,12 +1,16 @@
 import { openai } from "@ai-sdk/openai";
 import { streamText } from "ai";
-import { NextRequest } from 'next/server';
+
 export const maxDuration = 30;
-export async function POST(req: NextRequest) {
-	const { messages } = await req.json();
-	const response = await streamText({
-		model: openai("gpt-4o"),
-		messages
+
+export async function POST() {
+	console.log(11111, 'IN API')
+	const prompt = "give me synonymous of lively";
+	const response =  await streamText({
+		model: openai("gpt-4"),
+		prompt,
 	});
-return response.toAIStreamResponse();	
+
+	console.log(22222, response.toDataStreamResponse())
+	return response.toDataStreamResponse();
 }
